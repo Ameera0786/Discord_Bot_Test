@@ -40,3 +40,6 @@ coverage/
 # package-lock.json
 # yarn.lock
 # pnpm-lock.yaml
+
+# Data files (contain user IDs and game state)
+src/utils/managers/users.json
