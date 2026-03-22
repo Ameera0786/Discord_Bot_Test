@@ -1,0 +1,40 @@
+{
+  "733448947955400796": {
+    "money": 7161,
+    "energy": 100,
+    "hunger": 0,
+    "luck": 1,
+    "lastWork": 1774171952674,
+    "maxEnergy": 100,
+    "maxHunger": 100,
+    "foodInventory": {
+      "apple": {
+        "hunger": 5,
+        "energy": 0,
+        "qty": 0
+      },
+      "sandwich": {
+        "hunger": 15,
+        "energy": 5,
+        "qty": 0
+      },
+      "steak": {
+        "hunger": 25,
+        "energy": 10,
+        "qty": 0
+      },
+      "coffee": {
+        "hunger": 0,
+        "energy": 15,
+        "qty": 1
+      },
+      "orange": {
+        "hunger": 2,
+        "luck": 0.5,
+        "qty": 1,
+        "temporary": true,
+        "duration": 60000
+      }
+    }
+  }
+}
