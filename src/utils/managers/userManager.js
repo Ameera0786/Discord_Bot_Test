@@ -4,13 +4,9 @@ const usersFile = path.join(__dirname, 'users.json');
 
 let users = {};
 
-if (fs.existsSync(usersFile)) {
-    users = JSON.parse(fs.readFileSync(usersFile));
-}
+if (fs.existsSync(usersFile)) { users = JSON.parse(fs.readFileSync(usersFile)); }
 
-function saveUsers() {
-    fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
-}
+function saveUsers() { fs.writeFileSync(usersFile, JSON.stringify(users, null, 2)); }
 
 function getUser(id) {
     if (!users[id]) {
@@ -35,9 +31,7 @@ function adjustStat(user, stat, delta, min = 0, max = 100) {
 }
 
 function addEnergy(amount) {
-    for (const id in users) {
-        adjustStat(users[id], 'energy', amount, 0, users[id].maxEnergy);
-    }
+    for (const id in users) { adjustStat(users[id], 'energy', amount, 0, users[id].maxEnergy); }
 }
 
-module.exports = { getUser, adjustStat, addEnergy };
+module.exports = { getUser, adjustStat, addEnergy, saveUsers };

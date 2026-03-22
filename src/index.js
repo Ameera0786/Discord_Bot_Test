@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const { Client, Collection, GatewayIntentBits, MessageFlags } = require('discord.js');
 const {addEnergy} = require("./utils/managers/userManager");
+const { handleShopInteraction } = require('./handlers/shopHandler');
+
 require('dotenv').config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -19,26 +21,26 @@ for (const file of commandFiles) {
 
 // Handle interactions
 client.on('interactionCreate', async interaction => {
-    if (!interaction.isChatInputCommand()) return;
-
-    const command = client.commands.get(interaction.commandName);
-    if (!command) return;
-
-    try {
-        await command.execute(interaction);
-    } catch (error) {
-        console.error(error);
-        const errorMessage = { content: 'There was an error executing that command.', flags: MessageFlags.Ephemeral };
+    // SLASH COMMANDS
+    if (interaction.isChatInputCommand()) {
+        const command = client.commands.get(interaction.commandName);
+        if (!command) return;
 
         try {
-            if (interaction.deferred || interaction.replied) {
-                await interaction.editReply(errorMessage);
-            } else {
-                await interaction.reply(errorMessage);
-            }
-        } catch (followUpError) {
-            console.error('Failed to send error message:', followUpError);
+            await command.execute(interaction);
+        } catch (error) {
+            console.error(error);
+
+            const errorMessage = { content: 'There was an error executing that command.', flags: MessageFlags.Ephemeral };
+
+            if (interaction.deferred || interaction.replied) { await interaction.editReply(errorMessage); }
+            else { await interaction.reply(errorMessage); }
         }
+    }
+
+    // Shop
+    if (interaction.isStringSelectMenu() || interaction.isButton()) {
+        return handleShopInteraction(interaction);
     }
 });
 
