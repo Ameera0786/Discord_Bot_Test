@@ -1,4 +1,4 @@
-const fns = require('./eventFunctions');
+const fns = require('./workEventsHelper');
 
 const workEvents = [
     { name: 'lucky', run: fns.lucky },
@@ -11,7 +11,7 @@ const workEvents = [
     { name: 'normal', run: fns.normal },
 ];
 
-function getWorkEvent(user, baseEarnings) {
+function getWorkEvent(user) {
     const index = Math.floor(Math.random() * workEvents.length);
     const event = workEvents[index];
 
