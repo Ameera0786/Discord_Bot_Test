@@ -1,9 +1,9 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
-const { buildShopMenu } = require('../handlers/shopHandler');
+const { buildShopMenu } = require('../handlers/foodShopHandler');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('shop')
+        .setName('food_shop')
         .setDescription('Open the food shop'),
 
     async execute(interaction) {
@@ -13,12 +13,12 @@ module.exports = {
             const row = buildShopMenu();
 
             await interaction.editReply({
-                content: '🛒 Welcome to the shop!',
+                content: '🛒 Welcome to the food shop!',
                 components: [row]
             });
 
         } catch (error) {
-            console.error('Error in /shop command:', error);
+            console.error('Error in /foodShop command:', error);
             try {
                 if (interaction.deferred || interaction.replied) {
                     await interaction.editReply('❌ Something went wrong loading the shop.');

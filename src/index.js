@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { Client, Collection, GatewayIntentBits, MessageFlags } = require('discord.js');
 const {addEnergy} = require("./utils/managers/userManager");
-const { handleShopInteraction } = require('./handlers/shopHandler');
+const { handleShopInteraction } = require('./handlers/foodShopHandler');
 
 require('dotenv').config();
 
@@ -40,7 +40,7 @@ client.on('interactionCreate', async interaction => {
 
     // Shop
     if (interaction.isStringSelectMenu() || interaction.isButton()) {
-        if (interaction.customId.startsWith('shop_')) { return handleShopInteraction(interaction); }
+        if (interaction.customId.startsWith('foodShop_')) { return handleShopInteraction(interaction); }
     }
 });
 

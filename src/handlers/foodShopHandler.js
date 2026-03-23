@@ -22,7 +22,7 @@ function buildShopMenu() {
         }));
 
     const menu = new StringSelectMenuBuilder()
-        .setCustomId('shop_select')
+        .setCustomId('foodShop_select')
         .setPlaceholder('Choose something to buy...')
         .addOptions(options);
 
@@ -41,7 +41,7 @@ async function handleShopInteraction(interaction) {
     }
 
     if (interaction.isButton()) {
-        if (interaction.customId === 'shop_back') {
+        if (interaction.customId === 'foodShop_back') {
             state.item = null;
             state.quantityIndex = 0;
             return interaction.update({
@@ -52,8 +52,8 @@ async function handleShopInteraction(interaction) {
         }
 
         if (!state.item) { return interaction.reply({ content: "Pick an item first.", ephemeral: true }); }
-        if (interaction.customId === 'shop_qty_toggle') { state.quantityIndex = (state.quantityIndex + 1) % quantities.length; return updateUI(interaction, state, foods); }
-        if (interaction.customId === 'shop_buy_item') { return handlePurchase(interaction, state, foods); }
+        if (interaction.customId === 'foodShop_qty_toggle') { state.quantityIndex = (state.quantityIndex + 1) % quantities.length; return updateUI(interaction, state, foods); }
+        if (interaction.customId === 'foodShop_buy_item') { return handlePurchase(interaction, state, foods); }
     }
 }
 
@@ -72,17 +72,17 @@ async function updateUI(interaction, state, foods) {
 
     const row = new ActionRowBuilder().addComponents(
         new ButtonBuilder()
-            .setCustomId('shop_back')
+            .setCustomId('foodShop_back')
             .setLabel('← Back')
             .setStyle(ButtonStyle.Danger),
 
         new ButtonBuilder()
-            .setCustomId('shop_qty_toggle')
+            .setCustomId('foodShop_qty_toggle')
             .setLabel(`x${quantity}`)
             .setStyle(ButtonStyle.Secondary),
 
         new ButtonBuilder()
-            .setCustomId('shop_buy_item')
+            .setCustomId('foodShop_buy_item')
             .setLabel('Buy')
             .setStyle(ButtonStyle.Success)
     );
