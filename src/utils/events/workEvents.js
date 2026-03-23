@@ -1,4 +1,4 @@
-const fns = require('./eventFunctions');
+const fns = require('./workEventsHelper');
 
 const workEvents = [
     { name: 'lucky', run: fns.lucky },
