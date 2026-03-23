@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } = require('discord.js');
+const { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType, MessageFlags } = require('discord.js');
 const { getUser} = require('../utils/managers/userManager');
 const { getWorkEvent } = require('../utils/events/workEvents');
 
@@ -64,13 +64,12 @@ async function execute(interaction) {
     });
 
     collector.on('collect', async buttonInteraction => {
-        await buttonInteraction.deferUpdate();
-
         if (buttonInteraction.user.id !== interaction.user.id) {
-            return buttonInteraction.followUp({ content: "This isn't your work session!", ephemeral: true });
+            return buttonInteraction.followUp({ content: "This isn't your work session!", flags: MessageFlags.Ephemeral });
         }
 
-        await performWork(buttonInteraction);
+        await buttonInteraction.deferUpdate();
+        await performWork(interaction);
     });
 
     collector.on('end', async () => {

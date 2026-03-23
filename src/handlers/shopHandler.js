@@ -17,6 +17,7 @@ function buildShopMenu() {
         .map(([key, food]) => ({
             label: key.charAt(0).toUpperCase() + key.slice(1),
             value: key,
+            emoji: food?.emoji,
             description: `Costs ${food?.price ?? 0} coins`
         }));
 
@@ -51,8 +52,8 @@ async function handleShopInteraction(interaction) {
         }
 
         if (!state.item) { return interaction.reply({ content: "Pick an item first.", ephemeral: true }); }
-        if (interaction.customId === 'qty_toggle') { state.quantityIndex = (state.quantityIndex + 1) % quantities.length; return updateUI(interaction, state, foods); }
-        if (interaction.customId === 'buy_item') { return handlePurchase(interaction, state, foods); }
+        if (interaction.customId === 'shop_qty_toggle') { state.quantityIndex = (state.quantityIndex + 1) % quantities.length; return updateUI(interaction, state, foods); }
+        if (interaction.customId === 'shop_buy_item') { return handlePurchase(interaction, state, foods); }
     }
 }
 
@@ -76,12 +77,12 @@ async function updateUI(interaction, state, foods) {
             .setStyle(ButtonStyle.Danger),
 
         new ButtonBuilder()
-            .setCustomId('qty_toggle')
+            .setCustomId('shop_qty_toggle')
             .setLabel(`x${quantity}`)
             .setStyle(ButtonStyle.Secondary),
 
         new ButtonBuilder()
-            .setCustomId('buy_item')
+            .setCustomId('shop_buy_item')
             .setLabel('Buy')
             .setStyle(ButtonStyle.Success)
     );

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 const { buildShopMenu } = require('../handlers/shopHandler');
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
                 if (interaction.deferred || interaction.replied) {
                     await interaction.editReply('❌ Something went wrong loading the shop.');
                 } else {
-                    await interaction.reply({ content: '❌ Something went wrong loading the shop.', ephemeral: true });
+                    await interaction.reply({ content: '❌ Something went wrong loading the shop.', flags: MessageFlags.Ephemeral });
                 }
             } catch (followUpError) {
                 console.error('Failed to send error response:', followUpError);

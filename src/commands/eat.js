@@ -67,20 +67,22 @@ async function eatCommand(interaction) {
     });
 
     collector.on('collect', async buttonInteraction => {
-        await buttonInteraction.deferUpdate();
+        if (buttonInteraction.user.id !== interaction.user.id) { return buttonInteraction.reply({ content: "This isn't your inventory!", flags: MessageFlags.Ephemeral }); }
 
-        if (buttonInteraction.user.id !== interaction.user.id) {
-            return buttonInteraction.followUp({ content: "This isn't your inventory!", flags: MessageFlags.Ephemeral });
+        try {
+            await buttonInteraction.deferUpdate();
+
+            const foodName = buttonInteraction.customId.replace('eat_', '');
+            const result = eatFood(user, foodName);
+
+            await interaction.editReply({
+                content: result.message,
+                embeds: [buildInventoryEmbed(user)],
+                components: buildFoodButtons(user)
+            });
+        } catch (err) {
+            console.error('Button interaction failed (likely stale):', err.code);
         }
-
-        const foodName = buttonInteraction.customId.replace('eat_', '');
-        const result = eatFood(user, foodName);
-
-        await interaction.editReply({
-            content: result.message,
-            embeds: [buildInventoryEmbed(user)],
-            components: buildFoodButtons(user)
-        });
     });
 
     collector.on('end', async () => {

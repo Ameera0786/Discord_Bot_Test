@@ -40,7 +40,7 @@ client.on('interactionCreate', async interaction => {
 
     // Shop
     if (interaction.isStringSelectMenu() || interaction.isButton()) {
-        return handleShopInteraction(interaction);
+        if (interaction.customId.startsWith('shop_')) { return handleShopInteraction(interaction); }
     }
 });
 
